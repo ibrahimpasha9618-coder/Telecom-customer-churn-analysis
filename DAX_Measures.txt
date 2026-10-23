@@ -1,0 +1,36 @@
+POWER BI DAX MEASURES
+======================
+
+Total Customers =
+DISTINCTCOUNT('Telecom Customers'[customer_id])
+
+Churned Customers =
+CALCULATE([Total Customers], 'Telecom Customers'[churn] = 1)
+
+Retained Customers =
+[Total Customers] - [Churned Customers]
+
+Churn Rate =
+DIVIDE([Churned Customers], [Total Customers], 0)
+
+Average Monthly Charge =
+AVERAGE('Telecom Customers'[monthly_charges])
+
+Average Tenure (Months) =
+AVERAGE('Telecom Customers'[tenure_months])
+
+Total Charges =
+SUM('Telecom Customers'[total_charges])
+
+Average Late Payments =
+AVERAGE('Telecom Customers'[late_payments])
+
+Calculated columns
+------------------
+Churn Status =
+IF('Telecom Customers'[churn] = 1, "Churned", "Stayed")
+
+Age Band =
+SWITCH(TRUE(), 'Telecom Customers'[age] < 30, "18-29",
+               'Telecom Customers'[age] < 45, "30-44",
+               'Telecom Customers'[age] < 60, "45-59", "60+")
